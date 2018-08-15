@@ -1,0 +1,149 @@
+//Пример с инета//
+@mixin large-text {
+  font: {//Вот здесь интересно как это в общем сфойстве прописуются подсвойства//
+    family: Arial;
+    size: 20px;
+    weight: bold;
+  }
+  color: #ff9000;
+}
+//Задание дз здесь>>>//
+@mixin red {
+	color: red;
+}
+
+@mixin blue {
+	color:blue;
+}
+//Осознанно втыкнул клас чтобы посмотреть как будет//
+@mixin green {
+	.green{
+	color: green;}
+}
+// Это согласно ДЗ//
+.red { 
+	@include red();
+}
+
+.blue { font-size: 22px;//Интеремно было//
+	@include blue();
+}
+//Upd HW//
+.type {
+	@include green ();
+}
+//extra//
+.exp1 {
+	@include large-text();
+}
+
+
+//задание по функцие из высотой//
+@function h($x) {
+	@return $x;
+}
+
+@function w($y) {
+	@return $y;
+}
+
+//extend
+%img_position {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 10px;
+	 	img {
+	 		border: 2px solid blue; 
+	 	}
+
+}
+
+.exp2 {
+	@extend %img_position;
+	box-sizing: border-box;
+	img{
+	$height: h(200)*1px;
+	height: $height;
+	}
+}
+
+.exp3{
+	@extend %img_position;
+	box-sizing: border-box;
+	img{
+	$width: w(200)*1px;
+	width: $width;
+	height: 168*$width/300;
+	}
+}
+
+
+//Примеры с %..... и  @extend//
+%center {
+	padding: 10px 30px 15px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+	height: 200px;
+	text-align: center;
+}
+
+%bordet_solid {
+	border: 4px solid #325438;
+}
+
+
+p.red, .blue {
+	@extend %center;
+	@extend %bordet_solid;
+}
+
+
+//placeholder, selection, keyframes//
+
+@mixin placeholder {
+  ::-webkit-input-placeholder { @content; }
+  :-moz-placeholder           { @content; }
+  ::-moz-placeholder          { @content; }
+  :-ms-input-placeholder      { @content; }  
+}
+
+@mixin selection {
+    ::-moz-selection { @content; }
+    ::selection { @content; }
+}
+//для всіх полів//
+@include placeholder {
+	color: #4b7263;
+}
+//для всього тексту//
+@include selection {
+    color: green;
+    background: black;
+}
+//Ок задали вы это, скачал я это а толку? Зачем здесь @- перед префиксом каждым.
+@mixin keyframes( $animationName ) {
+    @-webkit-keyframes $animationName {
+        @content;
+    }
+    @-moz-keyframes $animationName {
+        @content;
+    }
+    @-o-keyframes $animationName {
+        @content;
+    }
+    @keyframes $animationName {
+        @content;
+    }
+}
+
+@include keyframes( incrediblehulk )
+{
+    0% {
+        color: #f8d2c0;
+    }
+    100% {
+        color: #0f0;
+    }
+}
